@@ -10,6 +10,7 @@ import Button from '../Components/Button/Button';
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const hendelLogin = (email, password, e) => {
     e.preventDefault();
     const auth = getAuth();
@@ -37,7 +38,7 @@ export default function Login() {
         <Link to="/sing" className="link">
           <Button
             title={'Уже есть акаунт?'}
-            clasName={'formBtn '}
+            clasName={'formBtn'}
             type={'button'}
           />
         </Link>

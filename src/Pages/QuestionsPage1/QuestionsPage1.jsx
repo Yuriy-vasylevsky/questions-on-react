@@ -1,10 +1,10 @@
-import s from './QuestionsPage_1.module.scss';
+// import s from './QuestionsPage1.module.scss';
 
 import Container from '../../Components/Container/Container';
 import Footer from '../../Components/Footer/Footer';
 import Loading from '../../Components/Loading/Loading';
 import QuestionBox from '../../Components/QuestionBox/QuestionBox';
-import QuestionBoxHistory from '../../Components/QuestionBoxHistory/QuestionBoxHistory';
+import QuestionBoxHistory from '../../Components/Chat.js/Chat';
 import Section from '../../Components/Section/Section ';
 import { questions1 } from '../../data/questions1';
 import { useState } from 'react';

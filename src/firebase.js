@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
-
+import { getFirestore } from 'firebase/firestore';
+import { getDatabase } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 const firebaseConfig = {
   apiKey: 'AIzaSyCV4Ld8CXpgCtbiGTPe5_MCWD5_HKWtkKs',
   authDomain: 'questions-react.firebaseapp.com',
@@ -11,3 +13,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const database = getDatabase(app);
+const auth = getAuth(app);
+
+export { db, app, database, auth };

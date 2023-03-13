@@ -4,7 +4,7 @@ import Container from '../../Components/Container/Container';
 import Footer from '../../Components/Footer/Footer';
 import Loading from '../../Components/Loading/Loading';
 import QuestionBox from '../../Components/QuestionBox/QuestionBox';
-import QuestionBoxHistory from '../../Components/QuestionBoxHistory/QuestionBoxHistory';
+import QuestionBoxHistory from '../../Components/Chat.js/Chat';
 import Section from '../../Components/Section/Section ';
 import { questions3 } from '../../data/questions3';
 import { useState } from 'react';

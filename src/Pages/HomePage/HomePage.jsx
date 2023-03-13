@@ -3,28 +3,31 @@ import s from './HomePage.module.scss';
 import { HeroCards } from '../../Components/HeroCards/HeroCards';
 import { HomeText } from '../../Components/HomeText/HomeText';
 import Container from '../../Components/Container/Container';
-// import { useState } from 'react';
 import img1 from '../../images/main1.png';
 import img2 from '../../images/main2.png';
 import img3 from '../../images/main3.jpg';
 import img4 from '../../images/main4.jpg';
-import { useNavigate } from 'react-router-dom';
-import useAuth from '../../hook/use-uath';
-import { useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { useEffect } from 'react';
+// import { auth } from '../../firebase';
 
 export default function HomePage() {
-  const { isAuth } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAuth) {
-      navigate('sing');
-    }
-  });
+  // useEffect(() => {
+  //   auth.onAuthStateChanged(user => {
+  //     if (user) {
+  //       return;
+  //     } else {
+  //       navigate('sing');
+  //     }
+  //   });
+  // });
 
   return (
     <>
       <main className="main">
+        {/* <UserList></UserList> */}
         <Container>
           <section className="top">
             <HomeText />

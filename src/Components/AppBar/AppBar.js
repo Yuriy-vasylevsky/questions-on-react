@@ -1,17 +1,28 @@
 import s from './AppBar.module.scss';
 import Container from '../Container/Container';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { removeUser } from '../../redux/auth/auth-slices';
-import useAuth from '../../hook/use-uath';
 import Button from '../Button/Button';
+// import { useEffect } from 'react';
+import { auth } from '../../firebase';
+import React, { useState } from 'react';
 
 export default function AppBar() {
-  const dispatch = useDispatch();
-  const { isAuth, email } = useAuth();
+  const [email, setEmail] = useState('');
+  const [isAuth, setIsAuth] = useState('');
   const logAut = () => {
-    dispatch(removeUser());
+    auth.signOut();
   };
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      setEmail(user.reloadUserInfo.email);
+      setIsAuth(user.reloadUserInfo.email);
+    } else {
+      setEmail('');
+      return null;
+    }
+  });
+  console.log('isAuth:', isAuth);
 
   return (
     <header className={s.header}>
@@ -23,12 +34,12 @@ export default function AppBar() {
 
           {!isAuth ? (
             <>
-              {/* <Link to="sing" className={s.logo}>
-              Войти
-            </Link>
-            <Link to="login" className={s.logo}>
-              Регистрация
-            </Link> */}
+              <Link to="sing" className={s.logo}>
+                Войти
+              </Link>
+              <Link to="login" className={s.logo}>
+                Регистрация
+              </Link>
             </>
           ) : (
             <div className={s.flex}>
