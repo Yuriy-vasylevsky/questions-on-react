@@ -6,7 +6,12 @@ import { Route, Routes } from 'react-router-dom';
 import Login from './Pages/Login';
 import SingIn from './Pages/SingIn';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import { auth } from './firebase';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
 const HomePage = React.lazy(() => import('./Pages/HomePage/HomePage'));
+const Profile = React.lazy(() => import('./Pages/Profile/Profile'));
 const QuestionsPage1 = React.lazy(() =>
   import('./Pages/QuestionsPage1/QuestionsPage1'),
 );
@@ -27,6 +32,19 @@ const Layouts = React.lazy(() => import('./Components/Layouts/Layouts'));
 const Loading = React.lazy(() => import('./Components/Loading/Loading'));
 
 export default function App() {
+  const [isAuth, setIsAuth] = useState(null);
+  console.log('isAuth:', isAuth);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        setIsAuth(user.reloadUserInfo.email);
+      } else {
+        return null;
+      }
+    });
+  }, []);
+
   return (
     <>
       <Suspense fallback={<Loading />}>
@@ -34,13 +52,16 @@ export default function App() {
           <Route path="/" exact element={<Layouts />}>
             <Route index element={<HomePage />} />
             <Route path="/q1" element={<QuestionsPage1 />} />
-            <Route
+            <Route path="/q2" element={<QuestionsPage2 />} />
+            {/* <Route
               path="/q2"
-              element={<PrivateRoute component={QuestionsPage2} />}
-            />
+              element={
+                <PrivateRoute isAuth={isAuth} component={QuestionsPage2} />
+              }
+            /> */}
             <Route path="/q3" element={<QuestionsPage3 />} />
             <Route path="/q4" element={<QuestionsPage4 />} />
-
+            <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/sing" element={<SingIn />} />
           </Route>

@@ -1,7 +1,7 @@
-import './Form.css';
+import './Form.scss';
 import { useState } from 'react';
 import React from 'react';
-import Button from '../Button/Button';
+// import Button from '../Button/Button';
 export default function Form({ title, onClickForm, children }) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');

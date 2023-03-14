@@ -1,16 +1,21 @@
 import { Route, Navigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import React, { useState } from 'react';
-export default function PrivateRoute({ component: Component }) {
-  const [isAuth, setIsAuth] = useState('');
+import { useEffect } from 'react';
 
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      setIsAuth(user.reloadUserInfo.email);
-    } else {
-      return null;
-    }
-  });
+export default function PrivateRoute({ component: Component, isAuth }) {
+  // const [isAuth, setIsAuth] = useState(11);
+  // console.log('isAuth:', isAuth);
 
-  return <>{isAuth ? <Component /> : <Navigate to="/sing" />}</>;
+  // useEffect(() => {
+  //   auth.onAuthStateChanged(user => {
+  //     if (user) {
+  //       setIsAuth(user.reloadUserInfo.email);
+  //     } else {
+  //       return null;
+  //     }
+  //   });
+  // });
+
+  return <>{isAuth ? <Component /> : <Navigate to="/login" />}</>;
 }
