@@ -5,7 +5,7 @@ import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from './Pages/Login';
 import SingIn from './Pages/SingIn';
-import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+// import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import { auth } from './firebase';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -53,12 +53,6 @@ export default function App() {
             <Route index element={<HomePage />} />
             <Route path="/q1" element={<QuestionsPage1 />} />
             <Route path="/q2" element={<QuestionsPage2 />} />
-            {/* <Route
-              path="/q2"
-              element={
-                <PrivateRoute isAuth={isAuth} component={QuestionsPage2} />
-              }
-            /> */}
             <Route path="/q3" element={<QuestionsPage3 />} />
             <Route path="/q4" element={<QuestionsPage4 />} />
             <Route path="/profile" element={<Profile />} />

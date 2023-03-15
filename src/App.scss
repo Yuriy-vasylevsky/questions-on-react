@@ -1,5 +1,10 @@
 @import-normalize;
 
+:root {
+  --main-bg-color: #212428;
+  --main-text-color: #fcfcfc;
+}
+
 body {
   color: #616161;
   font-family: 'Montserrat', sans-serif;
@@ -10,7 +15,7 @@ body {
   margin: 0;
   padding-top: 177px;
   padding-bottom: 100px;
-  background: #212428;
+  background: var(--main-bg-color);
 }
 
 img {
@@ -48,86 +53,10 @@ p {
   text-decoration: none;
 }
 
-///////////////////////////////
-// .block {
-//   display: none;
-// }
-
-// .top-button-remove {
-//   margin-top: 15px;
-// }
-
-// .top-button {
-//   margin-top: 15px;
-// }
-
-// .decor-1 {
-//   position: absolute;
-//   top: 140px;
-//   left: 50px;
-//   width: 150px;
-//   height: 130px;
-//   background: rgba(203, 71, 160, 0.3);
-//   filter: blur(100px);
-//   border-radius: 50%;
-//   animation-name: spin;
-//   animation-duration: 5s;
-//   animation-timing-function: linear;
-//   animation-iteration-count: infinite;
-// }
-
-// .decor-2 {
-//   position: absolute;
-//   top: 500px;
-//   right: 50px;
-//   width: 150px;
-//   height: 130px;
-//   background: rgba(0, 255, 133, 0.2);
-//   filter: blur(100px);
-//   border-radius: 50%;
-//   animation-name: spin;
-//   animation-duration: 5s;
-//   animation-timing-function: linear;
-//   animation-iteration-count: infinite;
-// }
-
-// @keyframes spin {
-//   0% {
-//     transform: rotate(0deg);
-//   }
-
-//   100% {
-//     transform: rotate(360deg);
-//   }
-// }
-
-// .text-for-history {
-//   font-size: 15px;
-//   padding-bottom: 10px;
-//   // transform: translateX(-400px);
-//   transition: all 2000ms;
-//   opacity: 1;
-// }
-
-// .main {
-//   background: #212428;
-// }
-
-// .title {
-//   // padding-top: 20px;
-//   font-weight: 700;
-//   font-size: 18px;
-//   line-height: 1.1;
-
-//   color: #cedff6;
-//   text-align: center;
-//   margin: auto 0;
-//   // padding-bottom: 15px;
-//   // display: flex;
-//   // align-items: center;
-// }
-
-// .hero-button {
-//   display: flex;
-//   margin: 30px auto 30px auto;
-// }
+.title {
+  padding-bottom: 20px;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.1;
+  color: var(--main-text-color);
+}

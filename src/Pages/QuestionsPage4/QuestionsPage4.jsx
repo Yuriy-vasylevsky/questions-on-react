@@ -83,6 +83,7 @@ export default function QuestionsPage_1() {
           </Section>
         </Container>
       </main>
+
       <Footer counter={counter} onClik={onClik} cleanOll={cleanOll} />
       <ToastContainer />
     </>

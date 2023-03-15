@@ -1,5 +1,6 @@
 import s from './AppBar.module.scss';
 import Container from '../Container/Container';
+import imgGuest from '../../images/profile/1.jpg';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import { useEffect } from 'react';
@@ -63,11 +64,19 @@ export default function AppBar() {
                   <p className={s.text}>{email}</p>
                 )}
                 <Link to="/profile" className={s.logo}>
-                  <img
-                    src={photoURL}
-                    alt="Аватар профіля"
-                    className={s.heder__img}
-                  />
+                  {photoURL ? (
+                    <img
+                      src={photoURL}
+                      alt="Аватар профіля"
+                      className={s.heder__img}
+                    />
+                  ) : (
+                    <img
+                      src={imgGuest}
+                      alt="Фото профіля"
+                      className={s.heder__img}
+                    />
+                  )}
                 </Link>
               </div>
             </div>

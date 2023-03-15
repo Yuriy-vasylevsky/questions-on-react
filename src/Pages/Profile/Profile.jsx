@@ -1,10 +1,14 @@
 import React from 'react';
+import './Profile.scss';
+import Container from '../../Components/Container/Container';
+import Button from '../../Components/Button/Button';
+import imgGuest from '../../images/profile/1.jpg';
 import { useState } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase';
+// import { auth } from '../../firebase';
 
 const Profile = () => {
   const [newName, setNewName] = useState('');
@@ -12,7 +16,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const storage = getStorage();
-  console.log('storage:', storage);
+  const currentUser = auth.currentUser;
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
@@ -26,18 +30,12 @@ const Profile = () => {
 
   const handleChangeName = e => {
     e.preventDefault();
-    updateProfile(auth.currentUser, {
+    updateProfile(currentUser, {
       displayName: newName,
       //   photoURL: '',
     })
-      .then(() => {
-        // Profile updated!
-        // ...
-      })
-      .catch(error => {
-        // An error occurred
-        // ...
-      });
+      .then(() => {})
+      .catch(error => {});
   };
 
   const handleFileUpload = e => {
@@ -61,22 +59,54 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleChangeName}>
-        <input type="text" onChange={e => setNewName(e.target.value)} />
-        <button type="submit">Зберегти</button>
-      </form>
+    <>
+      <Container>
+        <h1 className="title profile__title">Ваш профіль </h1>
 
-      <div>
-        <form onSubmit={handleFileUpload}>
-          <input type="file" onChange={e => setFile(e.target.files[0])} />
-          <button type="submit">Завантажити фото</button>
-        </form>
-      </div>
+        <div className="profile">
+          <div className="profile__img">
+            {currentUser.photoURL ? (
+              <img src={currentUser.photoURL} alt="Фото профіля" />
+            ) : (
+              <img src={imgGuest} alt="Фото профіля" />
+            )}
+          </div>
 
-      {/* <h2>Сторінка профіля {auth.currentUser.displayName}</h2>
-      <img src={auth.currentUser.photoURL} alt="Фото профіля" /> */}
-    </div>
+          <div className="profile__info">
+            <h2>Ваше імя</h2>
+
+            <div className="profile__update">
+              <h2>Обновити інформацію</h2>
+
+              <form onSubmit={handleChangeName} name="обновити імя ">
+                <label htmlFor="">Обновити імя</label>
+                <input type="text" onChange={e => setNewName(e.target.value)} />
+                <Button
+                  type={'submit'}
+                  title={'Зберегти'}
+                  clasName={'button'}
+                />
+              </form>
+
+              <div>
+                <form onSubmit={handleFileUpload}>
+                  <input
+                    type="file"
+                    onChange={e => setFile(e.target.files[0])}
+                  />
+
+                  <Button
+                    type={'submit'}
+                    title={'Завантажити фото'}
+                    clasName={'button'}
+                  />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </>
   );
 };
 
