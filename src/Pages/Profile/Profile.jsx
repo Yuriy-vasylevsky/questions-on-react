@@ -5,23 +5,29 @@ import Button from '../../Components/Button/Button';
 import imgGuest from '../../images/profile/1.jpg';
 import { useState } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { auth } from '../../firebase';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../../redux/auth/auth-slices';
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const [newName, setNewName] = useState('');
   const [file, setFile] = useState('');
+  const [currentUser, setCurrentUser] = useState('');
+  const user = useSelector(state => state.user);
+  // const user = useSelector(state => state.user);
   const navigate = useNavigate();
   const auth = getAuth();
+  console.log('auth:', auth.currentUser);
   const storage = getStorage();
-  const currentUser = auth.currentUser;
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if (user) {
-        return;
+        setCurrentUser(user);
       } else {
         navigate('/sing');
       }
@@ -30,26 +36,44 @@ const Profile = () => {
 
   const handleChangeName = e => {
     e.preventDefault();
+
     updateProfile(currentUser, {
       displayName: newName,
       //   photoURL: '',
     })
-      .then(() => {})
+      .then(() => {
+        setNewName('');
+        dispatch(
+          setUser({
+            ...user,
+            name: newName,
+          }),
+        );
+      })
       .catch(error => {});
   };
 
   const handleFileUpload = e => {
     e.preventDefault();
-    //   setFile(event.target.files[0]);
-    // const file = event.target.files[0];
 
-    // Завантажуємо файл на Firebase Storage
     const storageRef = ref(storage, 'myFiles/' + file.name);
 
     uploadBytes(storageRef, file)
       .then(() => {
+        getDownloadURL(storageRef).then(url => {
+          dispatch(
+            setUser({
+              ...user,
+              photo: url,
+            }),
+          );
+          updateProfile(currentUser, {
+            photoURL: url,
+          });
+        });
         console.log('Файл успішно завантажено на Firebase Storage');
       })
+
       .catch(error => {
         console.log(
           'Помилка під час завантаження файлу на Firebase Storage:',
@@ -65,8 +89,8 @@ const Profile = () => {
 
         <div className="profile">
           <div className="profile__img">
-            {currentUser.photoURL ? (
-              <img src={currentUser.photoURL} alt="Фото профіля" />
+            {user.photo ? (
+              <img src={user.photo} alt="Фото профіля" />
             ) : (
               <img src={imgGuest} alt="Фото профіля" />
             )}
@@ -78,9 +102,13 @@ const Profile = () => {
             <div className="profile__update">
               <h2>Обновити інформацію</h2>
 
-              <form onSubmit={handleChangeName} name="обновити імя ">
+              <form onSubmit={handleChangeName} name="Обновити імя ">
                 <label htmlFor="">Обновити імя</label>
-                <input type="text" onChange={e => setNewName(e.target.value)} />
+                <input
+                  type="text"
+                  value={newName}
+                  onChange={e => setNewName(e.target.value)}
+                />
                 <Button
                   type={'submit'}
                   title={'Зберегти'}
@@ -92,6 +120,7 @@ const Profile = () => {
                 <form onSubmit={handleFileUpload}>
                   <input
                     type="file"
+                    // value={file}
                     onChange={e => setFile(e.target.files[0])}
                   />
 

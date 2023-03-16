@@ -13,37 +13,48 @@ export default function SingIn() {
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
+
   const onClickForm = (email, password, e) => {
     e.preventDefault();
 
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        console.log('user:', user);
+        dispatch(
+          setUser({
+            email: user.email,
+            token: user.accessToken,
+            id: user.uid,
+            name: user.displayName,
+          }),
+        );
+        navigate('/');
+      })
+      .catch(error => {
+        alert('Такогокористувача не знайдено');
+      });
+  };
+
+  const hendelLoginGoogle = () => {
+    signInWithPopup(auth, provider)
       .then(({ user }) => {
         dispatch(
           setUser({
             email: user.email,
             token: user.accessToken,
             id: user.uid,
+            name: user.displayName,
+            photo: user.photoURL,
           }),
         );
         navigate('/');
-      })
-      .catch(error => {
-        alert('Пользователь не найден');
-      });
-  };
 
-  const hendelLoginGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then(result => {
-        navigate('/');
-
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        console.log('credential:', credential);
-        const token = credential.accessToken;
-        console.log('token:', token);
-        const user = result.user;
-        console.log('user:', user);
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // console.log('credential:', credential);
+        // const token = credential.accessToken;
+        // console.log('token:', token);
+        // const user = result.user;
+        // console.log('user:', user);
       })
       .catch(error => {
         // const errorCode = error.code;
@@ -52,6 +63,7 @@ export default function SingIn() {
         // const credential = GoogleAuthProvider.credentialFromError(error);
       });
   };
+
   return (
     <div>
       <Form title={'Увійти'} onClickForm={onClickForm}>

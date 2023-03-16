@@ -6,12 +6,14 @@ import Button from '../Button/Button';
 import { useEffect } from 'react';
 import React, { useState } from 'react';
 import { getAuth } from 'firebase/auth';
+import { useSelector } from 'react-redux';
 
 export default function AppBar() {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  // const [name, setName] = useState('');
   const [isAuth, setIsAuth] = useState('');
   const [photoURL, setPhotoURL] = useState('');
+  const user = useSelector(state => state.user);
   const auth = getAuth();
 
   const logAut = () => {
@@ -22,11 +24,10 @@ export default function AppBar() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        console.log('user:', user);
         setEmail(user.reloadUserInfo.email);
         setIsAuth(user.reloadUserInfo.email);
         setPhotoURL(user.photoURL);
-        setName(user.displayName);
+        // setName(user.displayName);
       } else {
         setEmail('');
         setIsAuth('');
@@ -58,15 +59,15 @@ export default function AppBar() {
             <div className={s.flex}>
               <Button onClick={logAut} title={'Вийти'} clasName={'button'} />
               <div className={s.profile__box}>
-                {name ? (
-                  <p className={s.text}>{name}</p>
+                {user.name ? (
+                  <p className={s.text}>{user.name}</p>
                 ) : (
                   <p className={s.text}>{email}</p>
                 )}
                 <Link to="/profile" className={s.logo}>
                   {photoURL ? (
                     <img
-                      src={photoURL}
+                      src={user.photo}
                       alt="Аватар профіля"
                       className={s.heder__img}
                     />

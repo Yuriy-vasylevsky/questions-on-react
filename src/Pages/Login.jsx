@@ -27,6 +27,7 @@ export default function Login() {
             email: user.email,
             token: user.accessToken,
             id: user.uid,
+            name: user.displayName,
           }),
         );
         navigate('/');
@@ -38,15 +39,25 @@ export default function Login() {
 
   const hendelLoginGoogle = () => {
     signInWithPopup(auth, provider)
-      .then(result => {
+      .then(({ user }) => {
+        console.log('user:', user);
+        dispatch(
+          setUser({
+            email: user.email,
+            token: user.accessToken,
+            id: user.uid,
+            name: user.displayName,
+            photo: user.photoURL,
+          }),
+        );
         navigate('/');
 
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        console.log('credential:', credential);
-        const token = credential.accessToken;
-        console.log('token:', token);
-        const user = result.user;
-        console.log('user:', user);
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // console.log('credential:', credential);
+        // const token = credential.accessToken;
+        // console.log('token:', token);
+        // const user = result.user;
+        // console.log('user:', user);
       })
       .catch(error => {
         // const errorCode = error.code;

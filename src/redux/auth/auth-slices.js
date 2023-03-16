@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { startTransition } from 'react';
+
 const initialState = {
   email: null,
   id: null,
+  token: null,
+  name: null,
+  photo: null,
 };
 
 const userSlice = createSlice({
@@ -13,6 +16,8 @@ const userSlice = createSlice({
       state.email = payload.email;
       state.token = payload.token;
       state.id = payload.id;
+      state.name = payload.name;
+      state.photo = payload.photo;
     },
 
     removeUser(state, { payload }) {

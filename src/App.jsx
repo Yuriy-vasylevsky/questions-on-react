@@ -33,7 +33,6 @@ const Loading = React.lazy(() => import('./Components/Loading/Loading'));
 
 export default function App() {
   const [isAuth, setIsAuth] = useState(null);
-  console.log('isAuth:', isAuth);
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
