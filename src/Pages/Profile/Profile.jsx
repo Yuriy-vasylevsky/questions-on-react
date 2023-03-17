@@ -15,6 +15,7 @@ import { setUser } from '../../redux/auth/auth-slices';
 const Profile = () => {
   const dispatch = useDispatch();
   const [newName, setNewName] = useState('');
+  const [newLabelName, setNewLabelName] = useState('Вибрати фото');
   const [file, setFile] = useState('');
   const [currentUser, setCurrentUser] = useState('');
   const user = useSelector(state => state.user);
@@ -57,7 +58,7 @@ const Profile = () => {
     e.preventDefault();
 
     const storageRef = ref(storage, 'myFiles/' + file.name);
-
+    // setNewLabelName(file.name);
     uploadBytes(storageRef, file)
       .then(() => {
         getDownloadURL(storageRef).then(url => {
@@ -71,6 +72,7 @@ const Profile = () => {
             photoURL: url,
           });
         });
+        setNewLabelName('Завантажити');
         console.log('Файл успішно завантажено на Firebase Storage');
       })
 
@@ -97,14 +99,17 @@ const Profile = () => {
           </div>
 
           <div className="profile__info">
-            <h2>Ваше імя</h2>
+            <h2 className="profile__name">{user.name}</h2>
 
             <div className="profile__update">
-              <h2>Обновити інформацію</h2>
-
-              <form onSubmit={handleChangeName} name="Обновити імя ">
-                <label htmlFor="">Обновити імя</label>
+              <form
+                onSubmit={handleChangeName}
+                name="Обновити імя"
+                className="update__form"
+              >
+                <label className="update__form-label">Обновити імя</label>
                 <input
+                  className="update__form-input"
                   type="text"
                   value={newName}
                   onChange={e => setNewName(e.target.value)}
@@ -116,17 +121,25 @@ const Profile = () => {
                 />
               </form>
 
-              <div>
-                <form onSubmit={handleFileUpload}>
+              <div className="update__photo">
+                <h2 className="update__photo-title">Обновити фото</h2>
+                <form
+                  onSubmit={handleFileUpload}
+                  className="profile__file-input"
+                >
                   <input
+                    className="profile__input"
                     type="file"
-                    // value={file}
-                    onChange={e => setFile(e.target.files[0])}
+                    onChange={e => {
+                      setFile(e.target.files[0]);
+                      setNewLabelName(e.target.files[0].name);
+                      // console.log(e.target.files[0]);
+                    }}
                   />
-
+                  <label className="profile__input-label">{newLabelName}</label>
                   <Button
                     type={'submit'}
-                    title={'Завантажити фото'}
+                    title={'Завантажити'}
                     clasName={'button'}
                   />
                 </form>
