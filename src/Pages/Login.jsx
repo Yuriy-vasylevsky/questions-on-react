@@ -28,6 +28,7 @@ export default function Login() {
             token: user.accessToken,
             id: user.uid,
             name: user.displayName,
+            photo: user.photoURL,
           }),
         );
         navigate('/');

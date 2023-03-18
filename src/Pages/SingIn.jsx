@@ -26,6 +26,7 @@ export default function SingIn() {
             token: user.accessToken,
             id: user.uid,
             name: user.displayName,
+            photo: user.photoURL,
           }),
         );
         navigate('/');

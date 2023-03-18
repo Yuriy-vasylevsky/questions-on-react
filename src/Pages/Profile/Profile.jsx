@@ -22,7 +22,6 @@ const Profile = () => {
   // const user = useSelector(state => state.user);
   const navigate = useNavigate();
   const auth = getAuth();
-  console.log('auth:', auth.currentUser);
   const storage = getStorage();
 
   useEffect(() => {
@@ -99,7 +98,9 @@ const Profile = () => {
           </div>
 
           <div className="profile__info">
-            <h2 className="profile__name">{user.name}</h2>
+            <h2 className="profile__name">
+              {user.name ? user.name : user.email}
+            </h2>
 
             <div className="profile__update">
               <form
@@ -133,7 +134,6 @@ const Profile = () => {
                     onChange={e => {
                       setFile(e.target.files[0]);
                       setNewLabelName(e.target.files[0].name);
-                      // console.log(e.target.files[0]);
                     }}
                   />
                   <label className="profile__input-label">{newLabelName}</label>

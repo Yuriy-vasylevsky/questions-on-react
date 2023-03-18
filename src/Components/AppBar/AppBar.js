@@ -7,35 +7,28 @@ import { useEffect } from 'react';
 import React, { useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import { useSelector } from 'react-redux';
+import { removeUser } from '../../redux/auth/auth-slices';
+import { useDispatch } from 'react-redux';
 
 export default function AppBar() {
-  const [email, setEmail] = useState('');
-  // const [name, setName] = useState('');
-  const [isAuth, setIsAuth] = useState('');
-  const [photoURL, setPhotoURL] = useState('');
   const user = useSelector(state => state.user);
   const auth = getAuth();
+  const dispatch = useDispatch();
 
   const logAut = () => {
-    setIsAuth('');
     auth.signOut();
+    dispatch(removeUser());
   };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        setEmail(user.reloadUserInfo.email);
-        setIsAuth(user.reloadUserInfo.email);
-        setPhotoURL(user.photoURL);
-        // setName(user.displayName);
       } else {
-        setEmail('');
-        setIsAuth('');
       }
     });
 
     return unsubscribe;
-  }, [auth]);
+  });
 
   return (
     <header className={s.header}>
@@ -46,7 +39,7 @@ export default function AppBar() {
             <span className={s.logo__text}>vestin</span>
           </Link>
 
-          {!isAuth ? (
+          {!user.email ? (
             <div className={s.auth__box}>
               <Link to="sing" className={s.text}>
                 Увійти
@@ -62,10 +55,10 @@ export default function AppBar() {
                 {user.name ? (
                   <p className={s.text}>{user.name}</p>
                 ) : (
-                  <p className={s.text}>{email}</p>
+                  <p className={s.text}>{user.email}</p>
                 )}
                 <Link to="/profile" className={s.logo}>
-                  {photoURL ? (
+                  {user.photo ? (
                     <img
                       src={user.photo}
                       alt="Аватар профіля"

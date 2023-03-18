@@ -18,36 +18,36 @@
 //   display: flex;
 // }
 
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 20px;
-}
+// .chat-container {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+//   padding: 20px;
+// }
 
-.message-container {
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  height: 100%;
-  margin-bottom: 20px;
-}
+// .message-container {
+//   display: flex;
+//   flex-direction: column;
+//   overflow-y: scroll;
+//   height: 100%;
+//   margin-bottom: 20px;
+// }
 
-.message {
-  background-color: #f2f2f2;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
+// .message {
+//   background-color: #f2f2f2;
+//   border-radius: 10px;
+//   padding: 10px;
+//   margin-bottom: 10px;
+// }
 
-.message p {
-  margin: 0;
-}
+// .message p {
+//   margin: 0;
+// }
 
-.input-container {
-  display: flex;
-  justify-content: space-between;
-}
+// .input-container {
+//   display: flex;
+//   justify-content: space-between;
+// }
 
 .input-field {
   flex-grow: 1;
@@ -69,4 +69,70 @@
 
 .send-button:hover {
   background-color: #005e7d;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.my-message {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  padding: 10px;
+  border-radius: 20px;
+  // background-color: #b2dffc;
+  max-width: 60%;
+}
+
+.user-message {
+  display: flex;
+  margin-right: auto;
+  padding: 10px;
+  border-radius: 20px;
+  // background-color: #f2f2f2;
+  max-width: 60%;
+}
+
+.message__user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.message__user-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message__user-name {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0;
+}
+
+.message__text {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  height: 30px;
+  flex-direction: column;
+  background-color: #f2f2f2;
+  min-width: 400px;
+  border-radius: 30px;
+  padding: 5px;
+}
+
+.message__text-text {
+  // margin: 5px 0;
+}
+
+.message__text-date {
+  font-size: 10px;
+  margin: 0;
 }

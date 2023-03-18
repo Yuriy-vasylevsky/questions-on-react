@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import {
   getFirestore,
   collection,
@@ -13,7 +14,8 @@ import './chat.scss';
 
 const Chat = () => {
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
+  const [messageList, setMessageList] = useState([]);
+  const { photo, name, email } = useSelector(state => state.user);
 
   const sendMessage = async () => {
     const db = getFirestore(app);
@@ -21,6 +23,9 @@ const Chat = () => {
     await addDoc(messagesRef, {
       text: message,
       createdAt: serverTimestamp(),
+      photo,
+      name,
+      userEmail: email,
     });
     setMessage('');
   };
@@ -29,12 +34,13 @@ const Chat = () => {
     const messagesRef = collection(db, 'messages');
     const q = query(messagesRef, orderBy('createdAt'));
     const unsubscribe = onSnapshot(q, querySnapshot => {
-      const messages = querySnapshot.docs.map(doc => ({
+      const messageList = querySnapshot.docs.map(doc => ({
         ...doc.data(),
         id: doc.id,
       }));
-      setMessages(messages);
+      setMessageList(messageList);
     });
+
     return () => {
       unsubscribe();
     };
@@ -43,9 +49,20 @@ const Chat = () => {
   return (
     <div className="chat-container">
       <div className="message-container">
-        {messages.map(message => (
-          <div key={message.id} className="message">
-            <p>{message.text}</p>
+        {messageList.map(({ id, text, photo, name, userEmail, createdAt }) => (
+          <div
+            key={id}
+            className={userEmail === email ? 'my-message' : 'user-message'}
+          >
+            <div className="message__user">
+              <img src={photo} alt="" className="message__user-img" />
+              <p className="message__user-name">{name ? name : email}</p>
+            </div>
+
+            <div className="message__text">
+              <p className="message__text-text">{text}</p>
+              {/* <p className="message__text-date">{createdAt.seconds}</p> */}
+            </div>
           </div>
         ))}
       </div>
