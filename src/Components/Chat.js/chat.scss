@@ -79,21 +79,21 @@
 
 .my-message {
   display: flex;
+  flex-direction: row-reverse;
   margin-left: auto;
   align-items: center;
-  padding: 10px;
   border-radius: 20px;
-  // background-color: #b2dffc;
   max-width: 60%;
+  margin-bottom: 10px;
 }
 
 .user-message {
   display: flex;
+  align-items: center;
   margin-right: auto;
-  padding: 10px;
   border-radius: 20px;
-  // background-color: #f2f2f2;
   max-width: 60%;
+  margin-bottom: 10px;
 }
 
 .message__user {
@@ -103,29 +103,38 @@
   margin-right: 10px;
 }
 
+.my-message .message__user {
+  margin-left: 10px;
+  margin-right: 0;
+}
+
 .message__user-img {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  margin-right: 10px;
 }
 
 .message__user-name {
   font-weight: bold;
-  font-size: 14px;
-  margin: 0;
+  font-size: 16px;
+  color: var(--main-text-color);
+  margin-top: 5px;
+  text-align: center;
+  // max-width: 100px;
+  // min-width: 100px;
+  width: 100px;
 }
 
 .message__text {
   display: flex;
   justify-content: center;
   align-items: start;
-  height: 30px;
+  // height: 30px;
   flex-direction: column;
   background-color: #f2f2f2;
-  min-width: 400px;
+  min-width: 100px;
   border-radius: 30px;
-  padding: 5px;
+  padding: 15px;
 }
 
 .message__text-text {

@@ -41,7 +41,6 @@ export default function Login() {
   const hendelLoginGoogle = () => {
     signInWithPopup(auth, provider)
       .then(({ user }) => {
-        console.log('user:', user);
         dispatch(
           setUser({
             email: user.email,

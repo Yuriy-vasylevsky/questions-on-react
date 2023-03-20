@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 // import { auth } from '../../firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../../redux/auth/auth-slices';
+import admin from '../../firebase-admin';
+console.log('admin:', admin);
 
 const Profile = () => {
   const dispatch = useDispatch();
